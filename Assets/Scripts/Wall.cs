@@ -41,9 +41,9 @@ public class Wall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.name == "Player")
+        if (collision.collider.name != null)
         {
-            print("WOOHOO");
+            print("Hit the wall");
         }
     }
 
