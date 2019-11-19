@@ -38,12 +38,14 @@ public class Wall : MonoBehaviour
             }
         }
     }
-
+    //check for collision with the wall
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.name != null)
         {
-            print("Hit the wall");
+            print("Wall Hit");
+            FindObjectOfType<CameraShake>().GameOverShake();
+            //FindObjectOfType<GameController>().DecreaseHealth();
         }
     }
 
@@ -56,11 +58,14 @@ public class Wall : MonoBehaviour
         GetComponent<Transform>().position = pos;
     }
 
+    //see if the player matches the wall type
     void CheckPassage()
     {
         if (wallSpawner.activeWallType != "any" && wallSpawner.activeWallType != plselector.active)
         {
-            print("Game Over");
+            print("Not matching");
+            FindObjectOfType<CameraShake>().GameOverShake();
+            //FindObjectOfType<GameController>().DecreaseHealth();
         }
     }
 }
