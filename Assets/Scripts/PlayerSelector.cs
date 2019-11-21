@@ -16,7 +16,7 @@ public class PlayerSelector : MonoBehaviour
     bool goUp = false;
 
     public string active = "box";
-    // Start is called before the first frame update
+
     void Start()
     {
         ball.SetActive(false);
@@ -25,10 +25,9 @@ public class PlayerSelector : MonoBehaviour
 
     private void Update()
     {
+        Vector3 pos = currShape.GetComponentInChildren<Transform>().position;
         if (change)
         {
-            Vector3 pos = currShape.GetComponentInChildren<Rigidbody>().gameObject.transform.position;
-
             ballBtn.interactable = false;
             boxBtn.interactable = false;
             if (goUp)
@@ -63,8 +62,8 @@ public class PlayerSelector : MonoBehaviour
                     boxBtn.interactable = true;
                 }
             }
-            currShape.GetComponentInChildren<Rigidbody>().gameObject.transform.position = pos;
         }
+        currShape.GetComponentInChildren<Transform>().position = pos;
     }
 
     public void SetBallActive()

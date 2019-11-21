@@ -29,6 +29,7 @@ public class Wall : MonoBehaviour
             {
                 CheckPassage();
                 checkStatus = false;
+                GetComponent<BoxCollider>().enabled = false;
             }
             if (pos.x <= -10f)
             {
@@ -38,15 +39,10 @@ public class Wall : MonoBehaviour
             }
         }
     }
-    //check for collision with the wall
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.name != null)
-        {
-            print("Wall Hit");
-            FindObjectOfType<CameraShake>().GameOverShake();
-            //FindObjectOfType<GameController>().DecreaseHealth();
-        }
+        print(collision.collider.name + " --- " + gameObject.name);
     }
 
     public void ActivateWall()
@@ -56,6 +52,7 @@ public class Wall : MonoBehaviour
         pos.y = 2f;
         pos.x = 24f;
         GetComponent<Transform>().position = pos;
+        GetComponent<BoxCollider>().enabled = true;
     }
 
     //see if the player matches the wall type
@@ -65,6 +62,7 @@ public class Wall : MonoBehaviour
         {
             print("Not matching");
             FindObjectOfType<CameraShake>().GameOverShake();
+            
             //FindObjectOfType<GameController>().DecreaseHealth();
         }
     }

@@ -11,7 +11,7 @@ public class CameraShake : MonoBehaviour
     public float frequency = 3f;
 
     private float elapsedTime = 0f;
-    private float defaultAmplitude = 0.5f;
+    private float defaultAmplitude = 0f;
     private bool shakeBool = false;
 
     public CinemachineVirtualCamera vCam;
