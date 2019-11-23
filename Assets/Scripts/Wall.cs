@@ -8,12 +8,14 @@ public class Wall : MonoBehaviour
     bool moveStatus = false;
     PlayerSelector plselector;
     WallSpawner wallSpawner;
+    GameController gameController;
     bool checkStatus = true;
 
     void Start()
     {
         wallSpawner = FindObjectOfType<WallSpawner>();
         plselector = FindObjectOfType<PlayerSelector>();
+        gameController = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,12 @@ public class Wall : MonoBehaviour
         {
             pos.x -= speed * Time.deltaTime;
             GetComponent<Transform>().position = pos;
+            if(!gameController.scoreIncreased && pos.x < 1f)
+            {
+                print("No score increaseddd");
+                FindObjectOfType<CameraShake>().GameOverShake();
+                FindObjectOfType<GameController>().DecreaseHealth();
+            }
             if (checkStatus && pos.x < 0.2f)
             {
                 CheckPassage();
@@ -42,7 +50,10 @@ public class Wall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print(collision.collider.name + " --- " + gameObject.name);
+        GetComponent<BoxCollider>().enabled = false;
+        gameController.IncreaseScore();
+        gameController.scoreIncreased = true;
+        print(gameController.GetScore());
     }
 
     public void ActivateWall()
@@ -60,10 +71,17 @@ public class Wall : MonoBehaviour
     {
         if (wallSpawner.activeWallType != "any" && wallSpawner.activeWallType != plselector.active)
         {
-            print("Not matching");
+            print("WAll not matched");
             FindObjectOfType<CameraShake>().GameOverShake();
-            
-            //FindObjectOfType<GameController>().DecreaseHealth();
+            FindObjectOfType<GameController>().DecreaseHealth();
+        }
+        else
+        {
+            if (!gameController.scoreIncreased)
+            {
+                print("Scored how do i nknow");
+                gameController.IncreaseScore();
+            }
         }
     }
 }
